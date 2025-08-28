@@ -1,4 +1,4 @@
-library xmidi_rw;
+library xmidi2;
 
 export 'src/midi_reader.dart';
 export 'src/midi_writer.dart';

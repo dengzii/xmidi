@@ -5,6 +5,8 @@ import 'byte_writer.dart';
 abstract class MidiEvent {
   String type = '';
   int deltaTime = 0;
+  int tick = 0;
+
   bool get isMeta;
 
   late bool isRunning = false;
@@ -127,6 +129,18 @@ class NoteOnEvent extends MidiEvent {
   @override
   bool isMeta = false;
 
+  NoteOffEvent? noteOff;
+
+  int? get duration => noteOff == null ? null : noteOff!.tick - tick;
+
+  void linkNoteOff(NoteOffEvent event) {
+    if (noteOff != null) {
+      noteOff!.noteOn = event.noteOn;
+    }
+    noteOff = event;
+    event.noteOn = this;
+  }
+
   @override
   int writeEvent(ByteWriter w) {
     var eventTypeByte = 0x90 | channel;
@@ -163,6 +177,19 @@ class NoteOffEvent extends MidiEvent {
 
   @override
   bool isMeta = false;
+
+  NoteOnEvent? noteOn;
+
+  int get duration => noteOn == null ? 0 : tick - noteOn!.tick;
+
+  void linkNoteOn(NoteOnEvent event) {
+    if (noteOn != null) {
+      noteOn!.noteOff = null;
+      noteOn = null;
+    }
+    noteOn = event;
+    event.noteOff = this;
+  }
 
   @override
   int writeEvent(ByteWriter w) {
@@ -417,6 +444,7 @@ class SmpteOffsetEvent extends MidiEvent {
   int sec = 0;
   int frame = 0;
   int subFrame = 0;
+
   @override
   int writeEvent(ByteWriter w) {
     w.writeUInt8(0xFF);

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:xmidi_rw/xmidi_rw.dart';
+import 'package:xmidi2/xmidi2.dart';
 
 import 'track_player.dart';
 
