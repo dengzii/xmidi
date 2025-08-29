@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:xmidi2/xmidi2.dart';
+import 'package:xmidi/xmidi.dart';
 
 import 'track_player.dart';
 
@@ -172,6 +172,8 @@ class MidiPlayer {
 
     _totalEvents = 0;
     _totalTicks = 0;
+
+    _tracks.clear();
 
     for (var events in file.tracks) {
       _tracks.add(TrackPlayer(events));

@@ -1,4 +1,4 @@
-import 'package:xmidi2/xmidi2.dart';
+import 'package:xmidi/xmidi.dart';
 
 class TrackPlayerEvent {
   final int tick;

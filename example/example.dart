@@ -1,10 +1,10 @@
 import 'dart:io';
 
-import 'package:xmidi2/xmidi2.dart';
+import 'package:xmidi/xmidi.dart';
 
 void main() {
   // Open a file containing midi data
-  var file = File(r"C:\Users\dengz\Downloads\test2.mid");
+  var file = File(r"test.mid");
 
   // Construct a midi reader
   var reader = MidiReader();
@@ -12,13 +12,18 @@ void main() {
   // Parse midi directly from file. You can also use parseMidiFromBuffer to directly parse List<int>
   MidiFile parsedMidi = reader.parseMidiFromFile(file);
 
-  print(
-      'ticks=${parsedMidi.getFileDurationTicks()}, sec=${parsedMidi.getTimeInSeconds()}');
   for (var track in parsedMidi.tracks) {
     print("==== Track ${track.trackName} ====");
+    int index = 0;
     for (var event in track) {
-      if (event is NoteOnEvent) {
+      index++;
+      if (event is ProgramChangeMidiEvent) {
+        print("${event.programNumber} ${index}");
         // print("${event.tick} ${event.noteNumber} ${event.duration}");
+      } else if (event is NoteOnEvent || event is NoteOffEvent) {
+        //
+      } else {
+        print(event);
       }
     }
   }
