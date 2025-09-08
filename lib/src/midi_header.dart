@@ -1,5 +1,9 @@
 class MidiHeader {
   final int numTracks;
+
+  /// 0:  single track contains multiple channels
+  /// 1:  multiple simultaneous  tracks, each contains a single channel
+  /// 2:   multiple independent tracks
   final int format;
   final int? framesPerSecond;
   final int? ticksPerBeat;

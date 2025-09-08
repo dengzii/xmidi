@@ -5,6 +5,8 @@ import 'byte_writer.dart';
 abstract class MidiEvent {
   String type = '';
   int deltaTime = 0;
+
+  /// Absolute tick
   int tick = 0;
 
   bool get isMeta;
