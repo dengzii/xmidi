@@ -155,7 +155,7 @@ class MidiUtils {
   /// pitch class is given for the same midi number.
   static String midiToNote(int midi) {
     var name = MidiUtils.chromatic[midi % 12];
-    var oct = ((midi - 24) / 12).floor();
+    var oct = (midi / 12).floor();
     return '$name$oct';
   }
 
