@@ -11,9 +11,10 @@ class MidiFile {
   MidiFile(this.tracks, this.header);
 
   /// [splitTracks]  splits the single track into multiple tracks
-  static MidiFile readFromFile(String path, {bool splitTracks = true}) {
+  static Future<MidiFile> readFromFile(String path,
+      {bool splitTracks = true}) async {
     final rad = MidiReader();
-    final file = rad.parseMidiFromFile(File(path));
+    final file = await rad.parseMidiFromFile(File(path));
     if (file.header.format == 0 && splitTracks && file.tracks.length == 1) {
       final split = file.tracks.first.split();
       file.tracks.clear();

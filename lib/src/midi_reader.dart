@@ -70,8 +70,9 @@ class MidiReader {
   }
 
   /// Parses provided [file] and returns [MidiFile]
-  MidiFile parseMidiFromFile(File file) {
-    return parseMidiFromBuffer(file.readAsBytesSync());
+  Future<MidiFile> parseMidiFromFile(File file) async {
+    final bytes = await file.readAsBytes();
+    return parseMidiFromBuffer(bytes);
   }
 
   /// Reads event from provided [p] and returns parsed [MidiEvent]

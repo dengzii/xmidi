@@ -32,10 +32,10 @@ class MidiWriter {
   ///
   /// [running] reuse previous eventTypeByte when possible, to compress file
   /// [useByte9ForNoteOff] use 0x09 for noteOff when velocity is zero
-  void writeMidiToFile(MidiFile midiFile, File file,
-      {bool running = false, bool useByte9ForNoteOff = false}) {
+  Future writeMidiToFile(MidiFile midiFile, File file,
+      {bool running = false, bool useByte9ForNoteOff = false}) async {
     var bytes = writeMidiToBuffer(midiFile);
-    file.writeAsBytesSync(bytes);
+    await file.writeAsBytes(bytes);
   }
 
   /// Writes a midi track
